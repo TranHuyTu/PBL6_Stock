@@ -1,0 +1,1067 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset="utf-8" />
+    <title>Stock Market Prediction</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="keywords" />
+    <meta content="" name="description" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'image/dollar_icon.png' %}" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icon Font Stylesheet -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="container-fluid position-relative d-flex p-0">
+      <!-- Spinner Start -->
+      <div
+        id="spinner"
+        class="
+          show
+          position-fixed
+          translate-middle
+          w-100
+          vh-100
+          top-50
+          start-50
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <div
+          class="spinner-border text-primary"
+          style="width: 3rem; height: 3rem"
+          role="status"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <!-- Spinner End -->
+
+      <!-- Sidebar Start -->
+      <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-secondary navbar-dark">
+          <a href="../" class="navbar-brand mx-4 mb-3">
+            <h3 class="text-primary">
+              <i class="fa fa-user-edit me-2"></i>Stocks
+            </h3>
+          </a>
+          <div class="d-flex align-items-center ms-4 mb-4">
+            <div class="position-relative">
+              <img
+                class="rounded-circle"
+                src="{% static 'image/user.png' %}"
+                alt=""
+                style="width: 40px; height: 40px"
+              />
+              <div
+                class="
+                  bg-success
+                  rounded-circle
+                  border border-2 border-white
+                  position-absolute
+                  end-0
+                  bottom-0
+                  p-1
+                "
+              ></div>
+            </div>
+            <div class="ms-3">
+              <h6 class="mb-0">Welcome</h6>
+              <span class="login_status">Guest</span>
+            </div>
+          </div>
+          <div class="navbar-nav w-100">
+            <a href="../" class="nav-item nav-link active"
+              ><i class="fa fa-home me-2"></i>Home</a
+            >
+            <a href="../search" class="nav-item nav-link"
+              ><i class="fa fa-search me-2"></i>Predict</a
+            >
+            <a href="../ticker" class="nav-item nav-link"
+              ><i class="fa fa-list-alt me-2"></i>Ticker Info</a
+            >
+          </div>
+        </nav>
+      </div>
+      <!-- Sidebar End -->
+
+      <!-- Content Start -->
+      <div
+        class="content bg-white"
+        style="
+          background-image: url('https://res.cloudinary.com/dbaul3mwo/image/upload/v1700756907/learn_nodejs/R_bdaacd.jpg');
+        "
+      >
+        <!-- Navbar Start -->
+        <nav
+          class="navbar navbar-expand navbar-dark sticky-top px-4 py-0"
+          style="background: black; opacity: 0.8"
+        >
+          <a href="../" class="navbar-brand d-flex d-lg-none me-4">
+            <h2 class="text-primary mb-0">
+              <i class="fa fa-user-edit"></i>
+            </h2>
+          </a>
+          <a href="#" class="sidebar-toggler flex-shrink-0">
+            <i class="fa fa-bars"></i>
+          </a>
+
+          <div class="navbar-nav align-items-center ms-auto">
+            <div class="nav-item dropdown">
+              <a
+                href="#"
+                class="nav-link dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                <img
+                  class="rounded-circle me-lg-2"
+                  src="{% static 'image/user.png' %}"
+                  alt=""
+                  style="width: 40px; height: 40px"
+                />
+                <span class="d-none d-lg-inline-flex login_status">Guest</span>
+              </a>
+              <div
+                class="
+                  dropdown-menu dropdown-menu-end
+                  bg-secondary
+                  border-0
+                  rounded-0 rounded-bottom
+                  m-0
+                "
+              >
+                <a href="/search" class="dropdown-item">Predict</a>
+                <a href="/ticker" class="dropdown-item">Ticker Info</a>
+                <a href="/login" class="dropdown-item login_url mn-item"
+                  >Login</a
+                >
+              </div>
+            </div>
+          </div>
+        </nav>
+        <!-- Navbar End -->
+
+        <div class="container-fluid bg-white px-2 py-2">
+          <div class="col-xs-24 col-md-17 m-b-xs stock-cell">
+            <div class="text-bold m-b-xs">
+              <h1 class="fs-2">
+                <b>{{companyName.1}}</b>
+                <span class="h4 title">
+                  (<b
+                    >Khác:
+                    <a
+                      href="/AAC-cong-ty-tnhh-kiem-toan-va-ke-toan-aac.htm"
+                      class="title-link"
+                      >{{symbol}}</a
+                    ></b
+                  >)</span
+                >
+              </h1>
+            </div>
+            <h2 class="fs-3 text-muted">{{companyName.0}}</h2>
+            <div class="container my-2">
+              <div class="row">
+                <div class="col-1 my-auto text-end">
+                  <span class="text">Ngành: </span>
+                </div>
+                <div class="col my-auto ps-0 text-start">
+                  <h3 class="title-x mb-0">
+                    <a class="fs-4" href="/">
+                      {% for industry in industrys %}
+                        {{ industry }} ,
+                      {% endfor %}...
+                    </a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion bg-white" id="accordionExample">
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="TongQuan">
+                <button
+                  class="accordion-button bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTongQuan"
+                  aria-expanded="true"
+                  aria-controls="collapseTongQuan"
+                >
+                  Tổng quan
+                </button>
+              </h2>
+              <div
+                id="collapseTongQuan"
+                class="accordion-collapse collapse show"
+                aria-labelledby="TongQuan"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                   <div class="container-fluid pt-4 px-4">
+                    <div class="row g-4">
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="text-center rounded p-4">
+                              <h5 class="text-start mt-0">Tài Chính: </h5>
+                              <p>{{details}}</p>
+                                {% block Left_Plot %} {% autoescape off %}
+                                {{ plot_div }} {% endautoescape %}
+                                {% endblock Left_Plot %}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="rounded p-4">
+                                <div class="container">
+                                  <div class="row" style="min-height: 100px;">
+                                    <div class="container px-0" >
+                                      <h5 class="text-start mt-0">Tin Tức: </h5>
+                                      {% for info in InfoTickers|slice:":5" %}
+                                      <div class="container my-2">
+                                        <div class="row">
+                                          <div class="col-3">
+                                            {% with info_date_parts=info.date|slice:":10" %}
+                                                <span>{{ info_date_parts }}</span>
+                                            {% endwith %}
+                                          </div>
+                                          <div class="col">
+                                            <a class="text-start ms-auto" href="{% url 'info_detail'%}">{{ info.title }}</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <hr>
+                                      {% endfor %}
+                                    </div>
+                                  </div>
+                                  <div class="row" style="min-height: 100px;">
+                                    <div class="container px-0">
+                                      <h5 class="text-start mt-0">Thông tin cơ bản: </h5>
+                                      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                          <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Liên hệ</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Đăng kí KD</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Mốc lịch sử</button>
+                                        </li>
+                                      </ul>
+                                      <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fx-6 fw-bolder text-end text-dark">Tên đẩy đủ:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">{{companyName.1}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Tên tiếng Anh:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">{{companyName.0}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Tên viết tắt:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start text-info fw-bold">{{symbol}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Số điện thoại:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">{{phoneNumber}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">FAX:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">{{fax}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Email:</p>
+                                              </div>
+                                              <div class="col">
+                                                <a href="" class="text-start text-info">{{email}}</a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Website:</p>
+                                              </div>
+                                              <div class="col">
+                                                <a href="" class="text-start text-info">{{website}}</a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fx-6 fw-bolder text-end text-dark">Trạng Thái:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">{{status}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Mã số thuế:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">{{tax_id}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">GPTL:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start text-info">{{GPTL}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Ngày cấp:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">
+                                                  {% with info_date_parts=dateGPTL|slice:":10" %}
+                                                      <span>{{ info_date_parts }}</span>
+                                                  {% endwith %}
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">GPKD:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">{{GPKD}}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Ngày cấp:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">
+                                                  {% with info_date_parts=dateGPKD|slice:":10" %}
+                                                      <span>{{ info_date_parts }}</span>
+                                                  {% endwith %}
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="container text-center">
+                                            <div class="row">
+                                              <div class="col-4">
+                                                <p class="fs-6 fw-bolder text-end text-dark">Ngành ngề kinh doanh chính:</p>
+                                              </div>
+                                              <div class="col">
+                                                <p class="text-start">
+                                                  {% for industry in industrys %}
+                                                    {{ industry }} ,
+                                                  {% endfor %}...
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+                                          <p>{{details}}</p></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  </div>
+              </div>
+              </div>
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="ThongKe">
+                <button
+                  class="accordion-button collapsed bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseThongKe"
+                  aria-expanded="false"
+                  aria-controls="collapseThongKe"
+                >
+                  Thống kê giao dịch
+                </button>
+              </h2>
+              <div
+                id="collapseThongKe"
+                class="accordion-collapse collapse"
+                aria-labelledby="ThongKe"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <strong>Chưa có dữ liệu.</strong>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="PhanTich">
+                <button
+                  class="accordion-button collapsed bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapsePhanTich"
+                  aria-expanded="false"
+                  aria-controls="collapsePhanTich"
+                >
+                  Phân tích kĩ thuật
+                </button>
+              </h2>
+              <div
+                id="collapsePhanTich"
+                class="accordion-collapse collapse"
+                aria-labelledby="PhanTich"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <h5>Biểu đồ chứng khoán trong vòng 12 tháng gần đây nhất:</h5>
+
+                  {% block Center_Plot %}
+                  {% autoescape off %}
+                  {{ plot_div_left }}
+                  {% endautoescape %}
+                  {% endblock Center_Plot %}
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="TaiChinh">
+                <button
+                  class="accordion-button collapsed bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTaiChinh"
+                  aria-expanded="false"
+                  aria-controls="collapseTaiChinh"
+                >
+                  Tài Chính
+                </button>
+              </h2>
+              <div
+                id="collapseTaiChinh"
+                class="accordion-collapse collapse"
+                aria-labelledby="TaiChinh"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <strong>Chưa có dữ liệu.</strong>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="HoSo">
+                <button
+                  class="accordion-button collapsed bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseHoSo"
+                  aria-expanded="false"
+                  aria-controls="collapseHoSo"
+                >
+                  Hồ sơ doanh nghiệp
+                </button>
+              </h2>
+              <div
+                id="collapseHoSo"
+                class="accordion-collapse collapse"
+                aria-labelledby="HoSo"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <div class="container-fluid pt-4 px-4">
+                    <div class="row g-4">
+                      <div class="col-sm-12 col-xl-6">
+                        <div class="text-center rounded p-4">
+                          <h5 class="text-start mt-0">Mốc lịch sử:</h5>
+                          <p>{{details}}</p>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-xl-6">
+                        <div class="rounded p-4">
+                          <div class="container">
+                            <div class="row" style="min-height: 100px">
+                              <div class="container px-0">
+                                <h5 class="text-start mt-0">Đại diện theo pháp luật:</h5>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fx-6 fw-bolder text-end text-dark">Họ và Tên:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">{{legalRepresentation}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fs-6 fw-bolder text-end text-dark">Chức vụ:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">Giám đốc</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row" style="min-height: 100px">
+                              <div class="container px-0">
+                                <h5 class="text-start mt-0">Thông tin thành lập:</h5>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fx-6 fw-bolder text-end text-dark">Trạng Thái:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">{{status}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fs-6 fw-bolder text-end text-dark">Mã số thuế:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">{{tax_id}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fs-6 fw-bolder text-end text-dark">GPTL:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start text-info">{{GPTL}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fs-6 fw-bolder text-end text-dark">Ngày cấp:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">
+                                        {% with info_date_parts=dateGPTL|slice:":10" %}
+                                        <span>{{ info_date_parts }}</span>
+                                        {% endwith %}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fs-6 fw-bolder text-end text-dark">GPKD:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">{{GPKD}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fs-6 fw-bolder text-end text-dark">Ngày cấp:</p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">
+                                        {% with info_date_parts=dateGPKD|slice:":10" %}
+                                        <span>{{ info_date_parts }}</span>
+                                        {% endwith %}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container text-center">
+                                  <div class="row">
+                                    <div class="col-4">
+                                      <p class="fs-6 fw-bolder text-end text-dark">
+                                        Ngành ngề kinh doanh chính:
+                                      </p>
+                                    </div>
+                                    <div class="col">
+                                      <p class="text-start">
+                                        {% for industry in industrys %}
+                                          {{ industry }} ,
+                                        {% endfor %}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="TinTuc">
+                <button
+                  class="accordion-button collapsed bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTinTuc"
+                  aria-expanded="false"
+                  aria-controls="collapseTinTuc"
+                >
+                  Tin tức và sự kiện
+                </button>
+              </h2>
+              <div
+                id="collapseTinTuc"
+                class="accordion-collapse collapse"
+                aria-labelledby="TinTuc"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <div class="accordion" id="accordion">
+                    {% for info in InfoTickers %}
+                    <div class="accordion-item bg-white my-1">
+                      <h2 class="accordion-header" id={{ forloop.counter }}>
+                        <button class="accordion-button bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls={{ forloop.counter }}>
+                          <div class="container my-2">
+                            <div class="row">
+                              <div class="col-3">
+                                {% with info_date_parts=info.date|slice:":10" %}
+                                <span>{{ info_date_parts }}</span>
+                                {% endwith %}
+                              </div>
+                              <div class="col">
+                                <p class="text-start ms-auto">{{ info.title }}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                      </h2>
+                      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse show" aria-labelledby={{ forloop.counter }} data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                          <p>{{ info.content }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="TaiLieu">
+                <button
+                  class="accordion-button collapsed bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTaiLieu"
+                  aria-expanded="false"
+                  aria-controls="collapseTaiLieu"
+                >
+                  Tài liệu
+                </button>
+              </h2>
+              <div
+                id="collapseTaiLieu"
+                class="accordion-collapse collapse"
+                aria-labelledby="TaiLieu"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <p>{{details}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item bg-white my-1">
+              <h2 class="accordion-header bg-white" id="GiaoDich">
+                <button
+                  class="accordion-button collapsed bg-white"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseGiaoDich"
+                  aria-expanded="false"
+                  aria-controls="collapseGiaoDich"
+                >
+                  Giao dịch nội bộ
+                </button>
+              </h2>
+              <div
+                id="collapseGiaoDich"
+                class="accordion-collapse collapse"
+                aria-labelledby="GiaoDich"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <strong>Chưa có dữ liệu.</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Start -->
+        <div class="container-fluid pt-4 px-4">
+          <div class="bg-secondary rounded-top p-4">
+            <div class="row">
+              <div class="col-12 col-sm-6 text-center text-sm-start">
+                Người phát triển :
+                <a href="#">Trần Huy Tú, Nguyễn Trọng Nghĩa</a>
+              </div>
+              <div class="col-12 col-sm-6 text-center text-sm-end">
+                Người hướng dẫn:
+                <a href="#">Th.S Nguyễn Văn Nguyên</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer End -->
+      </div>
+      <!-- Content End -->
+
+      <!-- Back to Top -->
+      <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+        ><i class="bi bi-arrow-up"></i
+      ></a>
+    </div>
+    <!-- JavaScript Libraries -->
+    <style>
+      /* KEYFRAMES */
+
+      @keyframes spin {
+        from {
+          transform: rotate(0);
+        }
+        to {
+          transform: rotate(359deg);
+        }
+      }
+
+      @keyframes spin3D {
+        from {
+          transform: rotate3d(0.5, 0.5, 0.5, 360deg);
+        }
+        to {
+          transform: rotate3d(0deg);
+        }
+      }
+
+      @keyframes configure-clockwise {
+        0% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(90deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        75% {
+          transform: rotate(270deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes configure-xclockwise {
+        0% {
+          transform: rotate(45deg);
+        }
+        25% {
+          transform: rotate(-45deg);
+        }
+        50% {
+          transform: rotate(-135deg);
+        }
+        75% {
+          transform: rotate(-225deg);
+        }
+        100% {
+          transform: rotate(-315deg);
+        }
+      }
+
+      @keyframes pulse {
+        from {
+          opacity: 1;
+          transform: scale(1);
+        }
+        to {
+          opacity: 0.25;
+          transform: scale(0.75);
+        }
+      }
+
+      /* GRID STYLING */
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        background-color: #1d2630;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+
+      #load {
+        display: none;
+        position: fixed;
+        width: 166vh;
+        height: 90vh;
+        background: black;
+        opacity: 0.8;
+        top: 62px;
+        left: 250px;
+      }
+
+      .spinner-box {
+        width: 300px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        margin: 12% 36%;
+      }
+      /* SOLAR SYSTEM */
+
+      .solar-system {
+        width: 250px;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .orbit {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #fafbfc;
+        border-radius: 50%;
+      }
+
+      .earth-orbit {
+        width: 165px;
+        height: 165px;
+        -webkit-animation: spin 12s linear 0s infinite;
+      }
+
+      .venus-orbit {
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 7.4s linear 0s infinite;
+      }
+
+      .mercury-orbit {
+        width: 90px;
+        height: 90px;
+        -webkit-animation: spin 3s linear 0s infinite;
+      }
+
+      .planet {
+        position: absolute;
+        top: -5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #3ff9dc;
+      }
+
+      .sun {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: #ffab91;
+      }
+
+      .leo {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+
+      .blue-orbit {
+        width: 165px;
+        height: 165px;
+        border: 1px solid #91daffa5;
+        -webkit-animation: spin3D 3s linear 0.2s infinite;
+      }
+
+      .green-orbit {
+        width: 120px;
+        height: 120px;
+        border: 1px solid #91ffbfa5;
+        -webkit-animation: spin3D 2s linear 0s infinite;
+      }
+
+      .red-orbit {
+        width: 90px;
+        height: 90px;
+        border: 1px solid #ffca91a5;
+        -webkit-animation: spin3D 1s linear 0s infinite;
+      }
+
+      .white-orbit {
+        width: 60px;
+        height: 60px;
+        border: 2px solid #ffffff;
+        -webkit-animation: spin3D 10s linear 0s infinite;
+      }
+
+      .w1 {
+        transform: rotate3D(1, 1, 1, 90deg);
+      }
+
+      .w2 {
+        transform: rotate3D(1, 2, 0.5, 90deg);
+      }
+
+      .w3 {
+        transform: rotate3D(0.5, 1, 2, 90deg);
+      }
+
+      .three-quarter-spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid #fb5b53;
+        border-top: 3px solid transparent;
+        border-radius: 50%;
+        animation: spin 0.5s linear 0s infinite;
+      }
+    </style>
+    <script type="text/javascript">
+      function LoadURL() {
+        var ticker = document.getElementById('tickerinp').value;
+        var days = document.getElementById('days').value;
+        var server = window.location.origin;
+        var path = '/predict/' + ticker + '/' + days;
+        // Hiển thị biểu tượng loading
+        var loadingIcon = document.getElementById('load');
+        loadingIcon.style.display = 'block';
+        var url = server + path;
+        window.location.href = url;
+      }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      window.addEventListener('load', function () {
+        if (sessionStorage.getItem('token')) {
+          fetch('https://serverltmnc.onrender.com/login/decoded', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: sessionStorage.getItem('token'),
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              const elementLogin = document.querySelectorAll('.login_status');
+              const elementURL = document.querySelectorAll('.login_url');
+              elementLogin.forEach((item, index) => {
+                item.innerHTML = `<a href="/profile" style="font-weight: 900;font-family: 'Roboto';">${data.user.name}</a>`;
+              });
+              elementURL[0].innerHTML = `<a href="#" style="margin: 10px;" onclick="handleLogout()">Logout</a>`;
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        }
+      });
+      function handleLogout() {
+        sessionStorage.clear();
+        window.location.href = '/';
+      }
+    </script>
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "tabnine.disableFileRegex": [],
+    "tabnine.ignoreCertificateErrors": true,
+    "tabnine.logEngine": true
+}

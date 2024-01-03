@@ -223,7 +223,7 @@ def searchTicker(request):
 # Function to compile and train a model
 def compile_and_train_model(model, X_train, y_train, X_valid, y_valid):
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4), loss='mean_squared_error', metrics=['mae'])
-    model.fit(X_train, y_train, batch_size=64, epochs=50, validation_data=(X_valid, y_valid))
+    model.fit(X_train, y_train, batch_size=64, epochs=10, validation_data=(X_valid, y_valid))
 
 # Function to train a model and return it
 def train_model(model, X_train, y_train, X_valid, y_valid):

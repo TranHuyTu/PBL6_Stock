@@ -1,5 +1,4 @@
 import numpy as np
-import pandas as pd
 import tensorflow as tf
 import glob
 import os
@@ -11,26 +10,6 @@ import tqdm
 import time
 import matplotlib.pyplot as plt
 from datetime import datetime
-from keras.utils import plot_model
-from keras.models import Sequential
-from keras.layers import Convolution2D, Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import Flatten
-from keras.layers import LSTM
-from keras.layers import Dense
-import keras.metrics as metrics
-from keras.layers import AveragePooling2D
-from keras.preprocessing.image import ImageDataGenerator
-from keras.layers import BatchNormalization
-from keras.layers import Dropout
-from sklearn.metrics import classification_report
-from keras.optimizers import Adam
-import numpy as np
-import tensorflow as tf
-from keras import regularizers
-from keras.layers import LeakyReLU
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
 
 class AttenLayer(tf.keras.layers.Layer):
 
@@ -85,56 +64,56 @@ def build_model_BiLSTM(num_input, num_output):
 
 # Xây dựng mô hình CNN2D + Bidirectional LSTM
 def build_model_CNN_BiLSTM(shape_input, num_output):
-  model = Sequential()
-  model.add(Conv2D(32, 3, 3, input_shape=(shape_input[1], shape_input[-1], 1), padding='same', use_bias=True))
-  model.add(LeakyReLU(alpha=0.1))
-  model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
-  model.add(Dropout(0.25))
-  model.add(Conv2D(64, 3, 3, padding='same', use_bias=True))
-  model.add(LeakyReLU(alpha=0.1))
-  model.add(MaxPooling2D(pool_size=(2, 2), padding='same'))
-  model.add(tf.keras.layers.Lambda(ReshapeLayer))
-  model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=30, return_sequences=True)))
-  model.add(tf.keras.layers.Dropout(0.5))
-  model.add(AttenLayer(20))
-  model.add(tf.keras.layers.Dropout(0.2))
-  model.add(tf.keras.layers.Dense(num_output, activation='linear'))
-  return model
+    model = tf.keras.Sequential()
+    model.add(tf.keras.layers.Conv2D(32, (3, 3), input_shape=(shape_input[1], shape_input[-1], 1), padding='same', use_bias=True))
+    model.add(tf.keras.layers.LeakyReLU(alpha=0.1))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2, 2), padding='same'))
+    model.add(tf.keras.layers.Dropout(0.25))
+    model.add(tf.keras.layers.Conv2D(64, (3, 3), padding='same', use_bias=True))
+    model.add(tf.keras.layers.LeakyReLU(alpha=0.1))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=(2, 2), padding='same'))
+    model.add(tf.keras.layers.Lambda(ReshapeLayer))
+    model.add(tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units=30, return_sequences=True)))
+    model.add(tf.keras.layers.Dropout(0.5))
+    model.add(AttenLayer(20))
+    model.add(tf.keras.layers.Dropout(0.2))
+    model.add(tf.keras.layers.Dense(num_output, activation='linear'))
+    return model
 
 # Xây dựng mô hình LSTM
 def build_model_LSTM(num_input, num_output):
-    model = Sequential()
+    model = tf.keras.Sequential()
 
     # Adding the first LSTM layer and some Dropout regularisation
-    model.add(LSTM(units=50, return_sequences=True, input_shape=(num_input, 1)))
-    model.add(Dropout(0.2))
+    model.add(tf.keras.layers.LSTM(units=50, return_sequences=True, input_shape=(num_input, 1)))
+    model.add(tf.keras.layers.Dropout(0.2))
 
     # Adding a second LSTM layer and some Dropout regularisation
-    model.add(LSTM(units=50, return_sequences=True))
-    model.add(Dropout(0.2))
+    model.add(tf.keras.layers.LSTM(units=50, return_sequences=True))
+    model.add(tf.keras.layers.Dropout(0.2))
 
     # Adding a third LSTM layer and some Dropout regularisation
-    model.add(LSTM(units=50, return_sequences=True))
-    model.add(Dropout(0.2))
+    model.add(tf.keras.layers.LSTM(units=50, return_sequences=True))
+    model.add(tf.keras.layers.Dropout(0.2))
 
-    model.add(LSTM(units=50, return_sequences=True))
-    model.add(Dropout(0.2))
+    model.add(tf.keras.layers.LSTM(units=50, return_sequences=True))
+    model.add(tf.keras.layers.Dropout(0.2))
 
-    model.add(LSTM(units=50, return_sequences=True))
-    model.add(Dropout(0.2))
+    model.add(tf.keras.layers.LSTM(units=50, return_sequences=True))
+    model.add(tf.keras.layers.Dropout(0.2))
 
-    model.add(LSTM(units=50, return_sequences=True))
-    model.add(Dropout(0.2))
+    model.add(tf.keras.layers.LSTM(units=50, return_sequences=True))
+    model.add(tf.keras.layers.Dropout(0.2))
 
-    model.add(LSTM(units=50, return_sequences=True))
-    model.add(Dropout(0.2))
+    model.add(tf.keras.layers.LSTM(units=50, return_sequences=True))
+    model.add(tf.keras.layers.Dropout(0.2))
 
     # Adding a fourth LSTM layer and some Dropout regularisation
-    model.add(LSTM(units=50))
-    model.add(Dropout(0.5))
+    model.add(tf.keras.layers.LSTM(units=50))
+    model.add(tf.keras.layers.Dropout(0.5))
 
     # Adding the output layer
-    model.add(Dense(units=num_output))
+    model.add(tf.keras.layers.Dense(units=num_output))
 
     # Compiling the RNN
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3), loss="mean_squared_error")

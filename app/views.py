@@ -1,39 +1,38 @@
-from urllib import request
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext
+
 from plotly.offline import plot
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.graph_objs import Scatter
+
 import pandas as pd
 import numpy as np
 import json
+
 import yfinance as yf
 import datetime as dt
 import qrcode
-import tensorflow as tf
-import requests
+
 from .models import Project
+
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing, model_selection, svm
-import math
-from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
-from keras.layers import Dense, LSTM
-from keras.layers import Dropout
-from yahoo_fin import stock_info
-import datetime as dt
-from plotly.subplots import make_subplots
-from sklearn.model_selection import train_test_split
-from keras.layers import Conv2D, MaxPooling2D, LeakyReLU, Dropout, Flatten, LSTM, Dense, Reshape, Lambda, Bidirectional
 import concurrent.futures
+import requests
+from sklearn.preprocessing import MinMaxScaler
+from yahoo_fin import stock_info
 
-
+from plotly.subplots import make_subplots
 import sys
 sys.path.append("/app/AttenLayer.py")
 
 from app.AttenLayer import *
+
+
+print("Available GPUs:", tf.config.list_physical_devices('GPU'))
+print("Available CPUs:", tf.config.list_physical_devices('CPU'))
 # The Home page when Server loads up
 def index(request):
     # ================================================= Left Card Plot =========================================================
@@ -224,7 +223,7 @@ def searchTicker(request):
 # Function to compile and train a model
 def compile_and_train_model(model, X_train, y_train, X_valid, y_valid):
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4), loss='mean_squared_error', metrics=['mae'])
-    model.fit(X_train, y_train, batch_size=64, epochs=10, validation_data=(X_valid, y_valid))
+    model.fit(X_train, y_train, batch_size=64, epochs=50, validation_data=(X_valid, y_valid))
 
 # Function to train a model and return it
 def train_model(model, X_train, y_train, X_valid, y_valid):
@@ -436,6 +435,8 @@ def predict(request, ticker_value, number_of_days):
         info_ticker.append(stock_info_data.get(key, 'N/A'))
     # ========================================== Page Render section ==========================================
     return render(request, "result.html", context={ 'plot_div': plot_div,
+                                                'confidence' : "",
+                                                'forecast': "",
                                                 'ticker_value':ticker_value,
                                                 'number_of_days':number_of_days,
                                                 'plot_div_pred_lstm':plot_div_pred_lstm,

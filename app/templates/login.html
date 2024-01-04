@@ -1,232 +1,273 @@
 <style media="screen">
-    body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        font-family: "Jost", sans-serif;
-        background: url("https://res.cloudinary.com/dbaul3mwo/image/upload/v1700756907/learn_nodejs/R_bdaacd.jpg")
-            no-repeat center/ cover;
-    }
-    .main {
-        width: 350px;
-        height: 500px;
-        background: transparent;
-        overflow: hidden;
-        border-radius: 10px;
-        box-shadow: 12px -40px 60px #000;
-    }
-    #chk {
-        display: none;
-    }
-    .signup {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-    label {
-        color: #fff;
-        font-size: 2.3em;
-        justify-content: center;
-        display: flex;
-        margin: 60px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.5s ease-in-out;
-    }
-    input {
-        width: 60%;
-        height: 40px;
-        background: #e0dede;
-        justify-content: center;
-        display: flex;
-        margin: 20px auto;
-        padding: 10px;
-        border: none;
-        outline: none;
-        border-radius: 5px;
-    }
-    button {
-        width: 60%;
-        height: 40px;
-        margin: 10px auto;
-        justify-content: center;
-        display: block;
-        color: #fff;
-        background: #573b8a;
-        font-size: 1em;
-        font-weight: bold;
-        margin-top: 20px;
-        outline: none;
-        border: none;
-        border-radius: 5px;
-        transition: 0.2s ease-in;
-        cursor: pointer;
-    }
-    button:hover {
-        background: #6d44b8;
-    }
-    .login {
-        height: 460px;
-        background: #eee;
-        border-radius: 60% / 10%;
-        transform: translateY(-180px);
-        transition: 0.8s ease-in-out;
-    }
-    .login label {
-        color: #573b8a;
-        transform: scale(0.6);
-    }
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Jost", sans-serif;
+    background: url("https://res.cloudinary.com/dbaul3mwo/image/upload/v1700756907/learn_nodejs/R_bdaacd.jpg")
+      no-repeat center/ cover;
+  }
+  .main {
+    width: 350px;
+    height: 500px;
+    background: transparent;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 12px -40px 60px #000;
+  }
+  #chk {
+    display: none;
+  }
+  .signup {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  label {
+    color: #fff;
+    font-size: 2.3em;
+    justify-content: center;
+    display: flex;
+    margin: 60px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+  }
+  input {
+    width: 60%;
+    height: 40px;
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+  }
+  button {
+    width: 60%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #fff;
+    background: #573b8a;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    transition: 0.2s ease-in;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #6d44b8;
+  }
+  .login {
+    height: 460px;
+    background: #eee;
+    border-radius: 60% / 10%;
+    transform: translateY(-180px);
+    transition: 0.8s ease-in-out;
+  }
+  .login label {
+    color: #573b8a;
+    transform: scale(0.6);
+  }
 
-    #chk:checked ~ .login {
-        transform: translateY(-500px);
-    }
-    #chk:checked ~ .login label {
-        transform: scale(1);
-    }
-    #chk:checked ~ .signup label {
-        transform: scale(0.6);
-    }
-    .warn {
-        position: fixed;
-        color: white;
-        display: none;
-    }
+  #chk:checked ~ .login {
+    transform: translateY(-500px);
+  }
+  #chk:checked ~ .login label {
+    transform: scale(1);
+  }
+  #chk:checked ~ .signup label {
+    transform: scale(0.6);
+  }
+  .warn {
+    position: fixed;
+    color: white;
+    display: none;
+  }
 </style>
 <div class="main">
-    <input type="checkbox" id="chk" aria-hidden="true" />
+  <input type="checkbox" id="chk" aria-hidden="true" />
 
-    <div class="signup">
-        <form id="signupForm">
-            <label for="chk" aria-hidden="true">Sign up</label>
-            <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="User name"
-                required=""
-            />
-            <input
-                type="email"
-                id="email_dk"
-                name="email"
-                placeholder="Email"
-                required=""
-            />
-            <input
-                type="password"
-                id="password_dk"
-                name="pswd"
-                placeholder="Password"
-                required=""
-            />
-            <button type="submit" onclick="signupForm()">Sign up</button>
-        </form>
-    </div>
-    <p class="warn">Đăng kí thành công</p>
-    <div class="login">
-        <form id="loginForm">
-            <label for="chk" aria-hidden="true">Login</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email"
-                required=""
-            />
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                required=""
-            />
-            <button type="submit" onclick="loginForm()">Login</button>
-        </form>
-    </div>
+  <div class="signup">
+    <form id="signupForm">
+      <label for="chk" aria-hidden="true">Sign up</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="User name"
+        required=""
+      />
+      <input
+        type="email"
+        id="email_dk"
+        name="email"
+        placeholder="Email"
+        required=""
+      />
+      <input
+        type="password"
+        id="password_dk"
+        name="pswd"
+        placeholder="Password"
+        required=""
+      />
+      <button type="submit" onclick="signupForm()">Sign up</button>
+    </form>
+  </div>
+  <p class="warn signup-successful">Đăng kí thành công</p>
+  <p class="warn signup-failse">Đăng kí thất bại</p>
+  <div class="login">
+    <form id="loginForm">
+      <label for="chk" aria-hidden="true">Login</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Email"
+        required=""
+      />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+        required=""
+      />
+      <button type="submit" onclick="loginForm()">Login</button>
+    </form>
+  </div>
+  <p id="welcome-message" class="warn signin-successful">
+    Đăng nhập thành công
+  </p>
+  <p class="warn signin-failse">Đăng nhập thất bại</p>
 </div>
+
 <script>
-    document
-        .getElementById("signupForm")
-        .addEventListener("submit", function (event) {
-            event.preventDefault();
-        });
+  document
+    .getElementById("signupForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+    });
 
-    document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (event) {
-            event.preventDefault();
-        });
+  document
+    .getElementById("loginForm")
+    .addEventListener("submit", function (event) {
+      event.preventDefault();
+    });
 
-    var warn = document.querySelector(".warn");
-    function signupForm() {
-        const name = document.getElementById("username").value;
-        const email = document.getElementById("email_dk").value;
-        const password = document.getElementById("password_dk").value;
+  var warn = document.querySelector(".warn");
+  var warn_signup_successful = document.querySelector(".signup-successful");
+  var warn_signup_failse = document.querySelector(".signup-failse");
+  var warn_signin_successful = document.querySelector(".signin-successful");
+  var warn_signin_failse = document.querySelector(".signin-failse");
 
-        if (email && password && username) {
-            signup(name, email, password);
-        }
+  function signupForm() {
+    const name = document.getElementById("username").value;
+    const email = document.getElementById("email_dk").value;
+    const password = document.getElementById("password_dk").value;
+
+    if (email && password && username) {
+      signup(name, email, password);
     }
+  }
 
-    function loginForm() {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
+  function loginForm() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-        if (email && password) {
-            login(email, password);
-        }
+    if (email && password) {
+      login(email, password);
     }
+  }
 
-    function signup(name, email, password) {
-        fetch("https://serverltmnc.onrender.com/login/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name, email, password }),
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    warn.style.display = "block";
-                } else {
-                    // Handle login failure (e.g., display an error message)
-                    console.error("Login failed");
-                }
+  function signup(name, email, password) {
+    fetch("https://serverltmnc.onrender.com/login/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          warn_signup_successful.setAttribute(
+            "style",
+            "display: block;font-weight: 900;color: #0e9b0d;top: 70vh;left: 44vw;"
+          );
+          warn_signup_failse.setAttribute(
+            "style",
+            "display: none;font-weight: 900;color: red;top: 70vh;left: 44vw;"
+          );
+        } else {
+          warn_signup_failse.setAttribute(
+            "style",
+            "display: block;font-weight: 900;color: red;top: 70vh;left: 44vw;"
+          );
+          warn_signup_successful.setAttribute(
+            "style",
+            "display: none;font-weight: 900;color: red;top: 70vh;left: 44vw;"
+          );
+          console.error("Login failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  function login(email, password) {
+    fetch("https://serverltmnc.onrender.com/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          warn_signin_successful.setAttribute(
+            "style",
+            "display: block;font-weight: 900;color: #0e9b0d;top: 70vh;left: 44vw;"
+          );
+          warn_signin_failse.setAttribute(
+            "style",
+            "display: none;font-weight: 900;color: red;top: 70vh;left: 44vw;"
+          );
+          response
+            .json()
+            .then((data) => {
+              sessionStorage.setItem("token", data.token_login);
+              window.location.href = "/";
             })
             .catch((error) => {
-                console.error("Error:", error);
+              console.error("Error:", error);
             });
-    }
-
-    function login(email, password) {
-        fetch("https://serverltmnc.onrender.com/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    response
-                        .json()
-                        .then((data) => {
-                            sessionStorage.setItem("token", data.token_login);
-                            window.location.href = "/";
-                        })
-                        .catch((error) => {
-                            console.error("Error:", error);
-                        });
-                } else {
-                    // Handle login failure (e.g., display an error message)
-                    console.error("Login failed");
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    }
+        } else {
+          warn_signin_failse.setAttribute(
+            "style",
+            "display: block;font-weight: 900;color: red;top: 70vh;left: 44vw;"
+          );
+          warn_signin_successful.setAttribute(
+            "style",
+            "display: none;font-weight: 900;color: red;top: 70vh;left: 44vw;"
+          );
+          console.error("Login failed");
+          console.error("Login failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
 </script>

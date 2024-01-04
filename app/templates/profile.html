@@ -1,0 +1,104 @@
+  <div>
+    <h3>Task Status</h3>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Image Link</th>
+          <th>Audio Link</th>
+          <th>CreatedAt</th>
+          <th>UpdatedAt</th>
+        </tr>
+      </thead>
+      <tbody id="tasks">
+      </tbody>
+    </table>
+  </div>
+</div>
+<style>
+  .padding{
+    color:green;
+  }
+</style>
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const imagePreview = document.getElementById('imagePreview');
+  function handleShowHistory(){
+    fetch("https://serverltmnc.onrender.com/login/decoded", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": sessionStorage.getItem("token")
+      },
+    }).then(response=>response.json())
+    .then((data) =>{localStorage.setItem('id', JSON.stringify(data.user._id));})
+      .catch((error) => {
+          console.error("Error:", error);
+      });
+
+    var id_user=JSON.parse(localStorage.getItem('id'));
+    localStorage.removeItem('id');
+    console.log(id_user);
+    var res = fetch(`https://serverltmnc.onrender.com/product/${id_user}`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      }
+    }).then(response=>response.json())
+    .then((data) =>{localStorage.setItem('Products', JSON.stringify(data.Products));})
+      .catch((error) => {
+          console.error("Error:", error);
+      });
+    var Products = JSON.parse(localStorage.getItem('Products'));
+    localStorage.removeItem('Products');
+    console.log(Products)
+    var html="";
+    Products.forEach((product)=>{
+      if(product.audio_link=="Padding"){
+        const text = `
+        <tr>
+          <td>${product._id}</td>
+          <td><a href="${product.img_link}" target="_blank">${product.img_link}</a></td>
+          <td style="
+          color: green;
+          font-weight: 600;
+          ">${product.audio_link}</td>
+          <td>${product.createdAt}</td>
+          <td>${product.updatedAt}</td>
+        </tr>`;
+        html=html.concat(text);
+      }
+      else if(product.audio_link=="Error"){
+        const text = `
+          <tr>
+            <td>${product._id}</td>
+            <td><a href="${product.img_link}" target="_blank">${product.img_link}</a></td>
+            <td style="
+            color: red;
+            font-weight: 600;
+            ">${product.audio_link}</td>
+            <td>${product.createdAt}</td>
+            <td>${product.updatedAt}</td>
+          </tr>`;
+          html=html.concat(text);
+      }
+      else{
+          const text = `
+            <tr>
+              <td>${product._id}</td>
+              <td><a href="${product.img_link}" target="_blank">${product.img_link}</a></td>
+              <td><a href="${product.audio_link}" target="_blank">${product.audio_link}</a></td>
+              <td>${product.createdAt}</td>
+              <td>${product.updatedAt}</td>
+            </tr>`;
+            html=html.concat(text);
+      }
+      });
+    console.log(html);
+    const newRow = document.getElementById("tasks");
+    newRow.innerHTML = html;
+    }
+  
+  
+</script>
